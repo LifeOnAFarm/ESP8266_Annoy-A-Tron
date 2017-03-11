@@ -1,0 +1,34 @@
+/* Name:    Seamus de Cleir
+ * Program: Annoy-a-Tron on the NodeMCU Esp8266
+ * Date:    11/03/2017
+ */
+
+//Random Duration for the tone to play
+long randDur; 
+//Random pause before the next tone
+long randPause; 
+//Random frequency 
+long randFreq; 
+//Buzzer Pin
+int buzzerPin = 5;
+
+void setup ()
+{
+}
+
+void loop ()
+{
+  randPause = 60 * random(10, 60); //Pause is set between 10 minutes and 1 hours
+  randDur = random(200, 2000); //Duration is set between .5 and 2 seconds
+  randFreq = random(1000, 18000); //Frequency is set between 10kHz and 18 kHz
+  
+  //Plays the tone for randDur
+  tone(buzzerPin, randFreq);
+  delay(randDur);
+  
+  //Stops the tone
+  noTone(buzzerPin);
+
+  //Puts the NodeMCU into a deep sleep for the pause duration
+  ESP.deepSleep(randPause * 1000000, WAKE_RF_DEFAULT);
+}
